@@ -15,10 +15,26 @@ function App() {
     setQuestions([...questions, newQuestion]);
   }
 
+  function handleDeleteQuestion(deletedQuestion) {
+    const updatedQuestions = questions.filter((question) => question.id !== deletedQuestion.id);
+    setQuestions(updatedQuestions);
+  }
+
+  function handleQuestionChange(updatedQuestion) {
+    const updatedQuestions = questions.map((question) => {
+      if (question.id === updatedQuestion.id) {
+        return updatedQuestion;
+      } else {
+        return question;
+      }
+    });
+    setQuestions(updatedQuestions);
+  }
+
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm onAddQuestions={handleNewQuestion}/> : <QuestionList getQuestions={handleQuestionsFetch} questions={questions}/>}
+      {page === "Form" ? <QuestionForm onAddQuestions={handleNewQuestion}/> : <QuestionList getQuestions={handleQuestionsFetch} deleteQuestion={handleDeleteQuestion} changeAnswer={handleQuestionChange} questions={questions}/>}
     </main>
   );
 }
